@@ -257,5 +257,14 @@ public class ParkingLotTest {
         assertEquals("Unrecognized parking ticket.", runtimeException.getMessage());
     }
 
+    @Test
+    void should_get_exception_when_park_given_smart_parking_boy_and_no_available_position() {
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
+            SmartParkingBoy smartParkingBoy = new SmartParkingBoy(new ParkingLot(0));
+            smartParkingBoy.park(new Car());
+        });
+        assertEquals("No available position.", runtimeException.getMessage());
+    }
+
 
 }
