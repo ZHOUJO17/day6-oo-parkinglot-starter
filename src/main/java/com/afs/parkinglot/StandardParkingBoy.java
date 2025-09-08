@@ -1,34 +1,18 @@
 package com.afs.parkinglot;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class StandardParkingBoy {
-    private final List<ParkingLot> parkingLots;
+public class StandardParkingBoy extends ParkingBoy {
 
     public StandardParkingBoy(ParkingLot... parkingLots) {
-        this.parkingLots = Arrays.asList(parkingLots);
+        super(parkingLots);
     }
 
-    public ParkingTicket park(Car car) {
+    @Override
+    protected ParkingLot findTargetParkingLot() {
         for (ParkingLot parkingLot : parkingLots) {
-            try {
-                return parkingLot.park(car);
-            } catch (RuntimeException e) {
-                // Continue to next parking lot if current one is full
+            if (parkingLot.hasAvailablePosition()) {
+                return parkingLot;
             }
         }
-        throw new RuntimeException("No available position.");
-    }
-
-    public Car fetch(ParkingTicket ticket) {
-        for (ParkingLot parkingLot : parkingLots) {
-            try {
-                return parkingLot.fetch(ticket);
-            } catch (RuntimeException e) {
-                // Continue to next parking lot if ticket not found in current one
-            }
-        }
-        throw new RuntimeException("Unrecognized parking ticket.");
+        return null;
     }
 }
