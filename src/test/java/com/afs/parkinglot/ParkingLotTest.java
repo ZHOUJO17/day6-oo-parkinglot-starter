@@ -402,5 +402,24 @@ public class ParkingLotTest {
         assertEquals("No available position.", runtimeException.getMessage());
     }
 
+    @Test
+    void should_park_to_parking_lot_with_highest_available_rate_when_park_given_super_parking_boy_with_two_parking_lots_and_a_car() {
+        ParkingLot firstParkingLot = new ParkingLot(2);
+        ParkingLot secondParkingLot = new ParkingLot(5);
+        // Fill first parking lot with 1 car (rate = 1/2 = 0.5)
+        firstParkingLot.park(new Car());
+        // Fill second parking lot with 1 car (rate = 4/5 = 0.8)
+        secondParkingLot.park(new Car());
+
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy(firstParkingLot, secondParkingLot);
+        Car car = new Car();
+
+        ParkingTicket parkingTicket = superParkingBoy.park(car);
+
+        assertNotNull(parkingTicket);
+        Car resultCar = secondParkingLot.fetch(parkingTicket);
+        assertEquals(car, resultCar);
+    }
+
 
 }
