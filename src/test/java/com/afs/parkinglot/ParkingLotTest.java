@@ -348,5 +348,15 @@ public class ParkingLotTest {
         assertNotNull(parkingTicket);
     }
 
+    @Test
+    void should_get_a_car_when_fetch_given_super_parking_boy_and_valid_parking_ticket() {
+        SuperParkingBoy superParkingBoy = new SuperParkingBoy(new ParkingLot(10));
+        Car originalCar = new Car();
+        ParkingTicket parkingTicket = superParkingBoy.park(originalCar);
+        Car resultCar = superParkingBoy.fetch(parkingTicket);
+        assertNotNull(resultCar);
+        assertEquals(originalCar, resultCar);
+    }
+
 
 }
