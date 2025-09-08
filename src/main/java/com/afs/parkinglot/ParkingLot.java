@@ -4,29 +4,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ParkingLot {
-    private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
-    private static final String NO_AVAILABLE_POSITION = "No available position.";
-    private Map<ParkingTicket,Car> parkingTicketCarMap = new HashMap<>();
-    private int capacity;
-    ParkingTicket park(Car car) {
-        if(capacity <= 0) throw new RuntimeException(NO_AVAILABLE_POSITION);
-        capacity--;
-        ParkingTicket parkingTicket = new ParkingTicket();
-        parkingTicketCarMap.put(parkingTicket,car);
-        return parkingTicket;
-    }
+    private final int capacity;
+    private final Map<ParkingTicket, Car> parkedCars;
 
     public ParkingLot(int capacity) {
         this.capacity = capacity;
+        this.parkedCars = new HashMap<>();
     }
 
-    public Car fetch(ParkingTicket parkingTicket) {
-        if(parkingTicketCarMap.containsKey(parkingTicket)){
-            capacity++;
-            Car car = parkingTicketCarMap.get(parkingTicket);
-            parkingTicketCarMap.remove(parkingTicket);
-            return car;
+    public ParkingTicket park(Car car) {
+        if (parkedCars.size() >= capacity) {
+            throw new RuntimeException("No available position.");
         }
-        throw new RuntimeException(UNRECOGNIZED_PARKING_TICKET);
+        ParkingTicket ticket = new ParkingTicket();
+        parkedCars.put(ticket, car);
+        return ticket;
+    }
+
+    public Car fetch(ParkingTicket ticket) {
+        if (ticket == null || !parkedCars.containsKey(ticket)) {
+            throw new RuntimeException("Unrecognized parking ticket.");
+        }
+        return parkedCars.remove(ticket);
+    }
+
+    public boolean hasAvailablePosition() {
+        return parkedCars.size() < capacity;
     }
 }
