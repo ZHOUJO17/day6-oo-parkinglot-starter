@@ -24,4 +24,19 @@ public class ParkingLotTest {
         assertEquals(originalCar,resultCar);
     }
 
+    @Test
+    void should_get_a_car_when_multi_fetch_given_multi_valid_parking_tickets() {
+        ParkingLot parkingLot = new ParkingLot(10);
+        Car originalCar = new Car();
+        Car originalCar1 = new Car();
+        ParkingTicket parkingTicket = parkingLot.park(originalCar);
+        ParkingTicket parkingTicket1 = parkingLot.park(originalCar1);
+        Car resultCar = parkingLot.fetch(parkingTicket);
+        Car resultCar1 = parkingLot.fetch(parkingTicket1);
+        assertNotNull(resultCar);
+        assertEquals(originalCar,resultCar);
+        assertNotNull(resultCar1);
+        assertEquals(originalCar1,resultCar1);
+    }
+
 }
