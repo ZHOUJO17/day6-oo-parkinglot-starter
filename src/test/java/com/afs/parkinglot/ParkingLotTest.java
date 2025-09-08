@@ -40,7 +40,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void should_get_noting_when_fetch_given_invalid_ticket() {
+    void should_get_exception_when_fetch_given_invalid_ticket() {
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
             new ParkingLot(10).fetch(null);
         });
@@ -56,6 +56,14 @@ public class ParkingLotTest {
         assertEquals("Unrecognized parking ticket.",runtimeException.getMessage());
         assertEquals("Unrecognized parking ticket.",runtimeException1.getMessage());
         assertEquals("Unrecognized parking ticket.",runtimeException2.getMessage());
+    }
+
+    @Test
+    void should_get_exception_when_park_given_unavailable_position() {
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
+            new ParkingLot(0).park(new Car());
+        });
+        assertEquals("No available position.",runtimeException.getMessage());
     }
 
 }

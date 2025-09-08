@@ -5,10 +5,11 @@ import java.util.Map;
 
 public class ParkingLot {
     private static final String UNRECOGNIZED_PARKING_TICKET = "Unrecognized parking ticket.";
+    private static final String NO_AVAILABLE_POSITION = "No available position.";
     private Map<ParkingTicket,Car> parkingTicketCarMap = new HashMap<>();
     private int capacity;
     ParkingTicket park(Car car) {
-        if(capacity <= 0) throw new RuntimeException(UNRECOGNIZED_PARKING_TICKET);
+        if(capacity <= 0) throw new RuntimeException(NO_AVAILABLE_POSITION);
         capacity--;
         ParkingTicket parkingTicket = new ParkingTicket();
         parkingTicketCarMap.put(parkingTicket,car);
