@@ -66,4 +66,11 @@ public class ParkingLotTest {
         assertEquals("No available position.",runtimeException.getMessage());
     }
 
+    @Test
+    void should_get_a_parking_ticket_when_park_given_standard_paring_boy_and_a_parking_lot_and_a_car() {
+        StandardParkingBoy standardParkingBoy = new StandardParkingBoy(new ParkingLot(10));
+        ParkingTicket parkingTicket = standardParkingBoy.park(new Car());
+        assertNotNull(parkingTicket);
+    }
+
 }
