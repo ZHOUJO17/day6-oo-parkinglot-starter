@@ -31,4 +31,8 @@ public class ParkingLot {
     public boolean hasAvailablePosition() {
         return parkedCars.size() < capacity;
     }
+
+    public int getAvailablePositions() {
+        return capacity - parkedCars.size();
+    }
 }
