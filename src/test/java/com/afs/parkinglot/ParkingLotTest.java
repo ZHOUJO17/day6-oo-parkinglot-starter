@@ -280,5 +280,19 @@ public class ParkingLotTest {
         assertEquals(car, resultCar);
     }
 
+    @Test
+    void should_park_to_first_parking_lot_when_park_given_smart_parking_boy_with_two_parking_lots_same_available_positions_and_a_car() {
+        ParkingLot firstParkingLot = new ParkingLot(2);
+        ParkingLot secondParkingLot = new ParkingLot(2);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(firstParkingLot, secondParkingLot);
+        Car car = new Car();
+
+        ParkingTicket parkingTicket = smartParkingBoy.park(car);
+
+        assertNotNull(parkingTicket);
+        Car resultCar = firstParkingLot.fetch(parkingTicket);
+        assertEquals(car, resultCar);
+    }
+
 
 }
