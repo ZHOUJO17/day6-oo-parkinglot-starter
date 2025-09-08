@@ -39,4 +39,23 @@ public class ParkingLotTest {
         assertEquals(originalCar1,resultCar1);
     }
 
+    @Test
+    void should_get_noting_when_fetch_given_invalid_ticket() {
+        RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
+            new ParkingLot(10).fetch(null);
+        });
+        RuntimeException runtimeException1 = assertThrows(RuntimeException.class, () -> {
+            new ParkingLot(10).fetch(new ParkingTicket());
+        });
+        RuntimeException runtimeException2 = assertThrows(RuntimeException.class, () -> {
+            ParkingLot parkingLot = new ParkingLot(10);
+            ParkingTicket parkingTicket = parkingLot.park(new Car());
+            parkingLot.fetch(parkingTicket);
+            parkingLot.fetch(parkingTicket);
+        });
+        assertEquals("Unrecognized parking ticket.",runtimeException.getMessage());
+        assertEquals("Unrecognized parking ticket.",runtimeException1.getMessage());
+        assertEquals("Unrecognized parking ticket.",runtimeException2.getMessage());
+    }
+
 }
